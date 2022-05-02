@@ -1,8 +1,9 @@
 syntax = "proto3";
 
+package grpc_app.proto;
+
 option go_package = "./";
 
-package grpc_app.proto;
 
 message Memory {
     enum Unit {

@@ -1,10 +1,11 @@
 syntax = "proto3";
 
-option go_package = "./";
-
 package grpc_app.proto;
 
+option go_package = "./";
+
 import "proto/memory_message.proto";
+
 
 message CPU {
     string brand = 1;
