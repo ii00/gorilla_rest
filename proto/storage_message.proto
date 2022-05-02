@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package grpc_app.proto;
 
-option go_package = "./";
+option go_package = "./;pb";
 
 import "proto/memory_message.proto";
 

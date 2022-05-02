@@ -2,7 +2,8 @@ syntax = "proto3";
 
 package grpc_app.proto;
 
-option go_package = "./";
+// pb is the package name
+option go_package = "./;pb";
 
 import "proto/keyboard_message.proto";
 import "proto/memory_message.proto";
