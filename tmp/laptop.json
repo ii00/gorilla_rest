@@ -1,0 +1,62 @@
+{
+  "id": "7a737969-723d-486e-a7a7-b31afdaec4a0",
+  "brand": "Dell",
+  "name": "XPS",
+  "cpu": {
+    "brand": "Intel",
+    "name": "Intel Core i9-11900H",
+    "number_cores": 13,
+    "number_threads": 14,
+    "min_ghz": 2.861608467762089,
+    "max_ghz": 4.61730033594371
+  },
+  "ram": {
+    "value": "56",
+    "unit": "GIGABYTE"
+  },
+  "gpus": [
+    {
+      "brand": "AMD",
+      "name": "RX 590",
+      "min_ghz": 1.0185055233703257,
+      "max_ghz": 1.833652178463307,
+      "memory": {
+        "value": "11",
+        "unit": "GIGABYTE"
+      }
+    }
+  ],
+  "storage": [
+    {
+      "driver": "SSD",
+      "memory": {
+        "value": "756",
+        "unit": "GIGABYTE"
+      }
+    },
+    {
+      "driver": "SSD",
+      "memory": {
+        "value": "6",
+        "unit": "TERABYTE"
+      }
+    }
+  ],
+  "screen": {
+    "size_inch": 14.310435,
+    "resolution": {
+      "width": 7136,
+      "height": 4014
+    },
+    "panel": "OLED",
+    "multitouch": true
+  },
+  "keyboard": {
+    "layout": "QWERTY",
+    "backlit": true
+  },
+  "weight_kg": 2.576511879837319,
+  "price_usd": 1869.4430875116907,
+  "release_year": 2022,
+  "updated_at": "2022-05-02T21:38:10.945502108Z"
+}

@@ -4,8 +4,11 @@ gen:
 clean:
 	rm pb/*.go
 
+tidy:
+	go mod tidy	
+
 run:
 	go run main.go
 
-tidy:
-	go mod tidy
+test:
+	go test -cover -race ./...
