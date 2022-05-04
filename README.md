@@ -1,5 +1,5 @@
 # grpc_app
 
-> protoc --proto_path=proto proto/*.proto --go_out=pb
+> protoc --proto_path=./ --go_out=pb proto/*.proto
 
-> go test -timeout 30s -run ^TestFileSerializer$ grpc_app/serializer
+>	protoc --proto_path=./ --go_out=./ --go_opt=paths=source_relative --go-grpc_out=./ --go-grpc_opt=paths=source_relative proto/*.proto
