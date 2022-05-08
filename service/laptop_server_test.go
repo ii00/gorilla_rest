@@ -54,7 +54,7 @@ func TestServerCreateLaptop(t *testing.T) {
 			name:   "failure_duplicate_id",
 			laptop: laptopDuplicateID,
 			store:  storeDuplicateID,
-			code:   codes.InvalidArgument,
+			code:   codes.AlreadyExists,
 		},
 	}
 

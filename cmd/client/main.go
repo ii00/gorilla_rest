@@ -21,7 +21,7 @@ func createLaptop(laptopClient pb.LaptopServiceClient) {
 		Laptop: laptop,
 	}
 
-	// sat timeout
+	// set timeout
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
@@ -68,7 +68,6 @@ func searchLaptop(laptopClient pb.LaptopServiceClient, filter *pb.Filter) {
 		log.Print("  + ram: ", laptop.GetRam().GetValue(), laptop.GetRam().GetUnit())
 		log.Print("  + price: ", laptop.GetPriceUsd(), "used")
 	}
-
 }
 
 func main() {

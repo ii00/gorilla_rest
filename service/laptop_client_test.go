@@ -16,7 +16,7 @@ import (
 func TestClientCreateLaptop(t *testing.T) {
 	t.Parallel()
 
-	laptopServer, serverAddress := startTestLaptopServer(t)
+	laptopServer, serverAddress := startTestLaptopServer(t, service.NewInMemoryLaptopStore())
 	laptopClient := newTestLaptopClient(t, serverAddress)
 
 	laptop := sample.NewLaptop()
@@ -39,8 +39,77 @@ func TestClientCreateLaptop(t *testing.T) {
 	requireSameLaptop(t, laptop, other)
 }
 
-func startTestLaptopServer(t *testing.T) (*service.LaptopServer, string) {
-	laptopServer := service.NewLaptopServer(service.NewInMemoryLaptopStore())
+func TestClientSearchLaptop(t *testing.T) {
+	t.Parallel()
+
+	filter := &pb.Filter{
+		MaxPriceUsd: 3000,
+		MinCpuCores: 8,
+		MinCpuGhz:   2.8,
+		MinRam:      &pb.Memory{Value: 16, Unit: pb.Memory_GIGABYTE},
+	}
+
+	store := service.NewInMemoryLaptopStore()
+	expectedIDs := make(map[string]bool)
+
+	for i := 0; i < 6; i++ {
+		laptop := sample.NewLaptop()
+
+		switch i {
+		case 0:
+			laptop.PriceUsd = 3500
+		case 1:
+			laptop.Cpu.NumberCores = 2
+		case 2:
+			laptop.Cpu.MinGhz = 2.0
+		case 3:
+			laptop.Ram = &pb.Memory{Value: 4096, Unit: pb.Memory_MEGABYTE}
+		case 4:
+			laptop.PriceUsd = 1900
+			laptop.Cpu.NumberCores = 8
+			laptop.Cpu.MinGhz = 3.0
+			laptop.Cpu.MaxGhz = 4.5
+			laptop.Ram = &pb.Memory{Value: 16, Unit: pb.Memory_GIGABYTE}
+			expectedIDs[laptop.Id] = true
+		case 5:
+			laptop.PriceUsd = 2500
+			laptop.Cpu.NumberCores = 12
+			laptop.Cpu.MinGhz = 3.2
+			laptop.Cpu.MaxGhz = 4.8
+			laptop.Ram = &pb.Memory{Value: 32, Unit: pb.Memory_GIGABYTE}
+			expectedIDs[laptop.Id] = true
+		}
+
+		err := store.Save(laptop)
+		require.NoError(t, err)
+	}
+
+	_, serverAddress := startTestLaptopServer(t, store)
+	laptopClient := newTestLaptopClient(t, serverAddress)
+
+	req := &pb.SearchLaptopRequest{Filter: filter}
+	stream, err := laptopClient.SearchLaptop(context.Background(), req)
+	require.NoError(t, err)
+
+	found := 0
+	for {
+		res, err := stream.Recv()
+		if err != nil {
+			break
+		}
+
+		require.NoError(t, err)
+		require.Contains(t, expectedIDs, res.GetLaptop().GetId())
+
+		found += 1
+	}
+
+	require.Equal(t, len(expectedIDs), found)
+
+}
+
+func startTestLaptopServer(t *testing.T, store service.LaptopStore) (*service.LaptopServer, string) {
+	laptopServer := service.NewLaptopServer(store)
 
 	grpcServer := grpc.NewServer()
 	pb.RegisterLaptopServiceServer(grpcServer, laptopServer)
