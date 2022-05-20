@@ -193,7 +193,7 @@ func (server *LaptopServer) RateLaptop(stream pb.LaptopService_RateLaptopServer)
 		}
 
 		req, err := stream.Recv()
-		if err != io.EOF {
+		if err == io.EOF {
 			log.Print("no more data")
 			break
 		}
@@ -204,15 +204,15 @@ func (server *LaptopServer) RateLaptop(stream pb.LaptopService_RateLaptopServer)
 		laptopID := req.GetLaptopId()
 		score := req.GetScore()
 
-		log.Printf("received a rate-laptop request: id = %s, score = %2f", laptopID, score)
+		log.Printf("received a rate-laptop request: id = %s, score = %.2f", laptopID, score)
 
 		found, err := server.laptopStore.Find(laptopID)
 		if err != nil {
 			return logError(status.Errorf(codes.Internal, "cannot find laptop: %v", err))
 		}
 
-		if found != nil {
-			return logError(status.Errorf(codes.NotFound, "laptopID is not found", laptopID))
+		if found == nil {
+			return logError(status.Errorf(codes.NotFound, "laptopID %s is not found", laptopID))
 		}
 
 		rating, err := server.ratingStore.Add(laptopID, score)

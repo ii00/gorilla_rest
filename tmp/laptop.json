@@ -1,27 +1,27 @@
 {
-  "id": "7a737969-723d-486e-a7a7-b31afdaec4a0",
+  "id": "17487993-be9f-4b81-b655-3aad0da3de22",
   "brand": "Dell",
-  "name": "XPS",
+  "name": "G Series",
   "cpu": {
-    "brand": "Intel",
-    "name": "Intel Core i9-11900H",
-    "number_cores": 13,
-    "number_threads": 14,
-    "min_ghz": 2.861608467762089,
-    "max_ghz": 4.61730033594371
+    "brand": "AMD",
+    "name": "AMD Ryzen 7 3700U",
+    "number_cores": 14,
+    "number_threads": 16,
+    "min_ghz": 3.2452016290683883,
+    "max_ghz": 3.905234741878851
   },
   "ram": {
-    "value": "56",
+    "value": "36",
     "unit": "GIGABYTE"
   },
   "gpus": [
     {
-      "brand": "AMD",
-      "name": "RX 590",
-      "min_ghz": 1.0185055233703257,
-      "max_ghz": 1.833652178463307,
+      "brand": "Nvidia",
+      "name": "NVIDIA RTX 3060",
+      "min_ghz": 1.3073861531084614,
+      "max_ghz": 1.7347327404571915,
       "memory": {
-        "value": "11",
+        "value": "6",
         "unit": "GIGABYTE"
       }
     }
@@ -30,7 +30,7 @@
     {
       "driver": "SSD",
       "memory": {
-        "value": "756",
+        "value": "181",
         "unit": "GIGABYTE"
       }
     },
@@ -43,20 +43,20 @@
     }
   ],
   "screen": {
-    "size_inch": 14.310435,
+    "size_inch": 15.987616,
     "resolution": {
-      "width": 7136,
-      "height": 4014
+      "width": 6437,
+      "height": 3621
     },
-    "panel": "OLED",
+    "panel": "IPS",
     "multitouch": true
   },
   "keyboard": {
-    "layout": "QWERTY",
+    "layout": "AZERTY",
     "backlit": true
   },
-  "weight_kg": 2.576511879837319,
-  "price_usd": 1869.4430875116907,
+  "weight_kg": 2.7498681233400593,
+  "price_usd": 1998.5655992683207,
   "release_year": 2022,
-  "updated_at": "2022-05-02T21:38:10.945502108Z"
+  "updated_at": "2022-05-20T11:35:00.612463198Z"
 }
