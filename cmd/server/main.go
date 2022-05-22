@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"flag"
 	"fmt"
 	"grpc_app/pb"
@@ -9,7 +10,28 @@ import (
 	"net"
 
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 )
+
+func unaryInterceptor(
+	ctx context.Context,
+	req interface{},
+	info *grpc.UnaryServerInfo,
+	handler grpc.UnaryHandler,
+) (interface{}, error) {
+	log.Println("--> unary interceptor: ", info.FullMethod)
+	return handler(ctx, req)
+}
+
+func streamInterceptor(
+	srv interface{},
+	stream grpc.ServerStream,
+	info *grpc.StreamServerInfo,
+	handler grpc.StreamHandler,
+) error {
+	log.Println("--> stream interceptor: ", info.FullMethod)
+	return handler(srv, stream)
+}
 
 func main() {
 	port := flag.Int("port", 0, "the server port")
@@ -20,8 +42,13 @@ func main() {
 	imageStore := service.NewDiskImageStore("img")
 	ratingStore := service.NewInMemoryRatingStore()
 	laptopServer := service.NewLaptopServer(laptopStore, imageStore, ratingStore)
-	grpcServer := grpc.NewServer()
+
+	grpcServer := grpc.NewServer(
+		grpc.UnaryInterceptor(unaryInterceptor),
+		grpc.StreamInterceptor(streamInterceptor),
+	)
 	pb.RegisterLaptopServiceServer(grpcServer, laptopServer)
+	reflection.Register(grpcServer)
 
 	address := fmt.Sprintf("0.0.0.0:%d", *port)
 	listener, err := net.Listen("tcp", address)
