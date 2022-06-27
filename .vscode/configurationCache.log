@@ -1,0 +1,1 @@
+{"buildTargets":["clean","client","gen","server","test","tidy"],"launchTargets":[],"customConfigurationProvider":{"workspaceBrowse":{"browsePath":[],"compilerArgs":[]},"fileIndex":[]}}
